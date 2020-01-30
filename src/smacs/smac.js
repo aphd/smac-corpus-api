@@ -3,8 +3,8 @@ import { InvalidPropertyError } from "../helpers/errors";
 import isValidEmail from "../helpers/is-valid-email.js";
 import upperFirst from "../helpers/upper-first";
 
-export default function makeSmac(contactInfo = requiredParam("contactInfo")) {
-    const validContact = validate(contactInfo);
+export default function makeSmac(smacInfo = requiredParam("smacInfo")) {
+    const validContact = validate(smacInfo);
     const normalContact = normalize(validContact);
     return Object.freeze(normalContact);
 

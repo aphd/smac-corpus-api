@@ -1,17 +1,17 @@
 import express from "express";
 import bodyParser from "body-parser";
-import handleContactsRequest from "./smacs";
+import handleSmacsRequest from "./smacs";
 import adaptRequest from "./helpers/adapt-request";
 
 const app = express();
 app.use(bodyParser.json());
 
-app.all("/smacs", contactsController);
-app.get("/smacs/:id", contactsController);
+app.all("/smacs", smacsController);
+app.get("/smacs/:id", smacsController);
 
-function contactsController(req, res) {
+function smacsController(req, res) {
     const httpRequest = adaptRequest(req);
-    handleContactsRequest(httpRequest)
+    handleSmacsRequest(httpRequest)
         .then(({ headers, statusCode, data }) =>
             res
                 .set(headers)

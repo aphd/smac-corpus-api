@@ -2,6 +2,7 @@ import makeSmac from "./smac";
 import { UniqueConstraintError } from "../helpers/errors";
 
 export default function makeSmacList({ database }) {
+    const COLLECTION = "hash";
     return Object.freeze({
         add,
         findByEmail,
@@ -27,7 +28,7 @@ export default function makeSmacList({ database }) {
 
         return (
             await db
-                .collection("contacts")
+                .collection(COLLECTION)
                 .find(query)
                 .limit(Number(max))
                 .toArray()
@@ -40,7 +41,7 @@ export default function makeSmacList({ database }) {
             contact._id = db.makeId(contactId);
         }
         const { result, ops } = await db
-            .collection("contacts")
+            .collection(COLLECTION)
             .insertOne(contact)
             .catch(mongoError => {
                 const [errorCode] = mongoError.message.split(" ");
@@ -65,7 +66,7 @@ export default function makeSmacList({ database }) {
     async function findById({ contactId }) {
         const db = await database;
         const found = await db
-            .collection("contacts")
+            .collection(COLLECTION)
             .findOne({ _id: db.makeId(contactId) });
         if (found) {
             return documentToContact(found);
@@ -76,7 +77,7 @@ export default function makeSmacList({ database }) {
     async function findByEmail({ emailAddress }) {
         const db = await database;
         const results = await db
-            .collection("contacts")
+            .collection(COLLECTION)
             .find({ emailAddress })
             .toArray();
         return results.map(documentToContact);
@@ -88,7 +89,7 @@ export default function makeSmacList({ database }) {
             contact._id = db.makeId(contactId);
         }
 
-        const { result } = await db.collection("contacts").deleteMany(contact);
+        const { result } = await db.collection(COLLECTION).deleteMany(contact);
         return result.n;
     }
 

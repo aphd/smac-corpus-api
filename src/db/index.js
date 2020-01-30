@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 export default async function makeDb() {
     const MongoClient = mongodb.MongoClient;
-    const dbName = "mm_api_demo";
+    const dbName = "smac-corpus";
     const client = new MongoClient(process.env.DB_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true
